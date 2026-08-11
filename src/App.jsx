@@ -55,6 +55,10 @@ function Layout() {
   const { company, theme } = useContent();
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
+  useEffect(() => {
+    document.body.classList.toggle("mobile-menu-open", open);
+    return () => document.body.classList.remove("mobile-menu-open");
+  }, [open]);
   return <div className="site-shell" style={{ "--primary": theme?.primary, "--accent": theme?.accent, "--surface": theme?.surface }}><Seo/>
     <header className="site-header">
       <Link className="brand" to="/" onClick={close}><img src={company.logo || "/assets/logo.png"} alt={company.name} /></Link>
