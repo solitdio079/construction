@@ -31,13 +31,14 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https:"],
-      frameSrc: ["'self'", "https://www.youtube.com", "https://www.google.com"],
+      frameSrc: ["'self'", "https://www.youtube.com", "https://youtube.com", "https://*.youtube.com", "https://www.youtube-nocookie.com", "https://*.youtube-nocookie.com", "https://www.google.com", "https://*.google.com"],
       scriptSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       connectSrc: ["'self'"],
     },
   },
+  referrerPolicy: { policy: "strict-origin-when-cross-origin" },
   crossOriginResourcePolicy: { policy: "cross-origin" },
 }));
 app.use(express.json({ limit: "2mb" }));
