@@ -76,37 +76,37 @@
     {
       "id": "winsa",
       "name": "Winsa",
-      "logo": ""
+      "logo": "/imported/partners/winsa.webp"
     },
     {
       "id": "kutahya-seramik",
       "name": "Kütahya Seramik",
-      "logo": ""
+      "logo": "/imported/partners/kutahya-seramik.webp"
     },
     {
       "id": "kronospan",
       "name": "Kronospan",
-      "logo": ""
+      "logo": "/imported/partners/kronospan.webp"
     },
     {
       "id": "kokler-petrol",
       "name": "Kökler Petrol",
-      "logo": ""
+      "logo": "/imported/partners/kokler-petrol.webp"
     },
     {
       "id": "kastamonu-entegre",
       "name": "Kastamonu Entegre",
-      "logo": ""
+      "logo": "/imported/partners/kastamonu-entegre.webp"
     },
     {
       "id": "eca",
       "name": "E.C.A.",
-      "logo": ""
+      "logo": "/imported/partners/eca.webp"
     },
     {
       "id": "canakkale-seramik",
       "name": "Çanakkale Seramik",
-      "logo": ""
+      "logo": "/imported/partners/canakkale-seramik.webp"
     }
   ],
   "testimonials": [],
@@ -116,42 +116,56 @@
       "id": "olukbasi-sozlesme",
       "title": "Olukbaşı Royal Suite Life projemiz için sözleşmemiz yapıldı",
       "excerpt": "Kastamonu Olukbaşı mevkiinde başlayacak projemiz için sözleşme süreci tamamlandı.",
-      "image": "",
+      "image": "/imported/news/olukbasi-sozlesme.webp",
       "published": true
     },
     {
       "id": "hamza-eren-goksu",
       "title": "Sponsoru olduğumuz genç boksör Hamza Eren Göksu profesyonel ilk maçına çıktı",
       "excerpt": "Genç sporcumuza profesyonel kariyerinde başarılar diliyoruz.",
-      "image": "",
+      "image": "/imported/news/hamza-eren-goksu.webp",
       "published": true
     },
     {
       "id": "yeni-proje-imzalar",
       "title": "Yeni projemiz için imzalar atıldı",
       "excerpt": "Arsa sahipleri ile anlaşmaya varılarak proje süreci başlatıldı.",
-      "image": "",
+      "image": "/imported/news/yeni-proje-imzalar.webp",
       "published": true
     },
     {
       "id": "hisarciklioglu-mesaj",
       "title": "M. Rıfat HİSARCIKLIOĞLU'ndan özel mesaj",
       "excerpt": "TOBB İkiz Kulelerde gerçekleştirilen buluşmada özel tebrik ve mesajlarını iletti.",
-      "image": "",
+      "image": "/imported/news/hisarciklioglu-mesaj.webp",
       "published": true
     },
     {
       "id": "vali-cakir-ziyaret",
       "title": "Vali Çakır’a ziyaretler",
       "excerpt": "Kastamonu Genç Girişimciler İcra Kurulu üyeleri Valimiz Sayın Avni Çakır’ı ziyaret etti.",
-      "image": "",
+      "image": "/imported/news/vali-cakir-ziyaret.webp",
       "published": true
     },
     {
       "id": "katso-secimleri",
       "title": "KATSO’da organ seçimleri tamamlandı",
       "excerpt": "Kastamonu Ticaret ve Sanayi Odası organ seçimleri gerçekleştirildi.",
-      "image": "",
+      "image": "/imported/news/katso-secimleri.webp",
+      "published": true
+    },
+    {
+      "id": "tobb-genc-girisimciler",
+      "title": "Kastamonu TOBB İl Genç Girişimciler İcra Kurulu başkanını seçti",
+      "excerpt": "05 Mart 2019 Salı günü Odamız toplantı salonunda yapılan seçim neticesinde Ahmet Cevdet UYANIK, TOBB İl Genç Girişimciler İcra Kurulu Başkanı seçildi.",
+      "image": "/imported/news/tobb-genc-girisimciler.webp",
+      "published": true
+    },
+    {
+      "id": "genc-fikirler",
+      "title": "Genç Fikirler Yarışıyor etkinliğinde öğrenciler uzman mentörlerle buluştu",
+      "excerpt": "Vocathlon Mesleki Girişim Maratonu kapsamında öğrencilerin girişimcilik kapasitelerini artırmaları, fikirlerini geliştirmeleri ve takım çalışmasını deneyimlemeleri amaçlandı.",
+      "image": "/imported/news/genc-fikirler.webp",
       "published": true
     }
   ],

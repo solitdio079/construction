@@ -99,21 +99,30 @@ function PageHero({ eyebrow, title, children }) {
 
 function QuoteForm() {
   const [status, setStatus] = useState("");
+  const [busy, setBusy] = useState(false);
   async function submit(event) {
     event.preventDefault();
-    setStatus("Gönderiliyor...");
+    setBusy(true);
+    setStatus("Talebiniz yönetim paneline kaydediliyor…");
     const form = event.currentTarget;
-    const response = await fetch("/api/teklif", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
-    const data = await response.json();
-    setStatus(data.message);
-    if (response.ok) form.reset();
+    try {
+      const response = await fetch("/api/teklif", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
+      const data = await response.json();
+      setStatus(data.message);
+      if (response.ok) form.reset();
+    } catch {
+      setStatus("Bağlantı kurulamadı. Lütfen tekrar deneyin veya bizi telefonla arayın.");
+    } finally {
+      setBusy(false);
+    }
   }
   return <form onSubmit={submit} className="quote-form">
     <label>Adınız soyadınız<input name="name" required placeholder="Adınız soyadınız" /></label>
     <label>Telefon numaranız<input name="phone" required inputMode="tel" placeholder="05XX XXX XX XX" /></label>
     <label>Proje türü<select name="projectType" required defaultValue=""><option value="" disabled>Seçiniz</option><option>Kentsel dönüşüm</option><option>Taahhüt projesi</option><option>Tadilat / yenileme</option><option>Diğer</option></select></label>
     <label>Projeniz hakkında kısa bilgi<textarea name="message" rows="4" placeholder="Yapı tipi, konum ve ihtiyacınızı yazabilirsiniz." /></label>
-    <button type="submit">Ücretsiz görüşme planla <span>→</span></button>
+    <p className="quote-destination">Talebiniz doğrudan Kuzeykale yönetim paneline kaydedilir.</p>
+    <button type="submit" disabled={busy}>{busy ? "Kaydediliyor…" : "Ücretsiz görüşme planla"} <span>→</span></button>
     {status && <p className="form-status" role="status">{status}</p>}
   </form>;
 }
@@ -143,7 +152,7 @@ function Home() {
 
 function Corporate() { return <main className="corporate page-main"><PageHero eyebrow="KURUMSAL" title={<>Güven, bilgi ve <em>sorumlulukla</em> inşa ediyoruz.</>}>Kuzeykale'nin kurum kültürü, ekibi ve çalışma yaklaşımı.</PageHero><section className="corporate-menu-grid"><Link to="/kurumsal/hakkimizda"><b>01</b><h2>Hakkımızda</h2><span>Şirketimizi tanıyın →</span></Link><Link to="/kurumsal/is-ortaklari"><b>02</b><h2>İş Ortaklarımız</h2><span>Markaları görün →</span></Link><Link to="/kurumsal/ekibimiz"><b>03</b><h2>Ekibimiz</h2><span>12 kişilik ekibimiz →</span></Link><Link to="/kurumsal/e-katalog"><b>04</b><h2>E-Katalog</h2><span>Belgeleri inceleyin →</span></Link><Link to="/kurumsal/insan-kaynaklari"><b>05</b><h2>İnsan Kaynakları</h2><span>Ekibimize katılın →</span></Link></section></main>; }
 function About() { const { company } = useContent(); return <main className="corporate page-main"><PageHero eyebrow="KURUMSAL · HAKKIMIZDA" title={<>Biz <em>kimiz?</em></>}/><section><h2>Kuzeykale İnşaat</h2><p>{company.about}</p><p>Taahhüt, mimarlık, mühendislik ve yapı denetim çalışmalarında kaliteyi, teknik disiplini ve güveni merkeze alıyoruz.</p></section></main>; }
-function Partners() { const { partners = [] } = useContent(); return <main className="corporate page-main"><PageHero eyebrow="KURUMSAL · İŞ ORTAKLARIMIZ" title={<>Güvenilir markalarla <em>birlikte.</em></>}/><section><div className="partner-grid">{partners.map((partner, index) => <article key={partner.id || partner.name || partner}>{partner.logo && <img src={partner.logo} alt=""/>}<span>{partner.name || partner}</span></article>)}</div></section></main>; }
+function Partners() { const { partners = [] } = useContent(); return <main className="corporate page-main"><PageHero eyebrow="KURUMSAL · İŞ ORTAKLARIMIZ" title={<>Güvenilir markalarla <em>birlikte.</em></>}/><section><div className="partner-grid">{partners.map(partner => <article key={partner.id || partner.name || partner}>{partner.logo && <img src={partner.logo} alt={`${partner.name || partner} logosu`}/>}<span>{partner.name || partner}</span></article>)}</div></section></main>; }
 function Team() { const { team = [] } = useContent(); return <main className="corporate page-main"><PageHero eyebrow="KURUMSAL · EKİBİMİZ" title={<>Deneyimli <em>ekibimiz.</em></>}>Mühendislikten satışa, projelerimizi birlikte hayata geçiren ekip.</PageHero><section><div className="team-grid full-team">{team.map(person => <article key={person.id || person.name}><img src={person.image} alt={person.name}/><h3>{person.name}</h3><p>{person.role}</p></article>)}</div></section></main>; }
 function Catalog() { const { certificates = [], company } = useContent(); return <main className="corporate page-main"><PageHero eyebrow="KURUMSAL · E-KATALOG" title={<>Belgelerimiz <em>tek yerde.</em></>}/><section><h2>E-Katalog ve belgeler</h2><div className="document-list">{certificates.length ? certificates.map(item => <a key={item.id} href={item.url} target="_blank" rel="noreferrer">{item.title} →</a>) : <a className="button" href={`mailto:${company.email}?subject=E-Katalog Talebi`}>E-katalog talep edin →</a>}</div></section></main>; }
 function Careers() { return <main className="corporate page-main"><PageHero eyebrow="KURUMSAL · İNSAN KAYNAKLARI" title={<>Birlikte <em>inşa edelim.</em></>}/><section><h2>Kuzeykale ekibine katılın</h2><p>Açık pozisyonlar ve genel başvurular için özgeçmişinizi e-posta ile paylaşabilirsiniz.</p><a className="button" href="mailto:info@kuzeykaleinsaat.com?subject=İnsan Kaynakları Başvurusu">Özgeçmiş gönderin →</a></section></main>; }
@@ -161,13 +170,29 @@ function ProjectIndex({ forcedCategory }) {
   return <main className="page-main project-list-page"><PageHero eyebrow="PROJELER" title={<>{title}: <em>kalıcı değerler.</em></>}>Konut, ticari yapı ve dönüşüm projelerimizi inceleyin.</PageHero>{!category && <div className="category-tabs">{Object.entries(categoryMeta).map(([key, meta]) => <Link key={key} to={`/projeler/${meta.path}`}>{meta.label}</Link>)}</div>}<section className="archive-grid">{visible.length ? visible.map(project => <ProjectCard key={project.id || project.slug} project={project}/>) : <p>Bu kategoride henüz yayınlanmış proje bulunmuyor.</p>}</section></main>;
 }
 
+function PhotoGallery({ images = [], title = "Galeri", className = "gallery-grid" }) {
+  const uniqueImages = [...new Set(images.filter(Boolean))];
+  const [activeIndex, setActiveIndex] = useState(null);
+  const close = () => setActiveIndex(null);
+  const previous = () => setActiveIndex(index => (index - 1 + uniqueImages.length) % uniqueImages.length);
+  const next = () => setActiveIndex(index => (index + 1) % uniqueImages.length);
+  useEffect(() => {
+    if (activeIndex === null) return undefined;
+    const onKeyDown = event => { if (event.key === "Escape") close(); if (event.key === "ArrowLeft") previous(); if (event.key === "ArrowRight") next(); };
+    document.body.classList.add("lightbox-open");
+    window.addEventListener("keydown", onKeyDown);
+    return () => { document.body.classList.remove("lightbox-open"); window.removeEventListener("keydown", onKeyDown); };
+  }, [activeIndex, uniqueImages.length]);
+  return <><div className={className}>{uniqueImages.map((image, index) => <button className="gallery-thumb" type="button" key={image} onClick={() => setActiveIndex(index)} aria-label={`${title} görseli ${index + 1} büyüt`}><img src={image} alt={`${title} görseli ${index + 1}`}/><span>Önizle</span></button>)}</div>{activeIndex !== null && <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${title} fotoğraf galerisi`} onMouseDown={event => event.target === event.currentTarget && close()}><button className="lightbox-close" type="button" onClick={close} aria-label="Galeriyi kapat">×</button>{uniqueImages.length > 1 && <button className="lightbox-nav lightbox-previous" type="button" onClick={previous} aria-label="Önceki fotoğraf">‹</button>}<figure><img src={uniqueImages[activeIndex]} alt={`${title} görseli ${activeIndex + 1}`}/><figcaption>{activeIndex + 1} / {uniqueImages.length}</figcaption></figure>{uniqueImages.length > 1 && <button className="lightbox-nav lightbox-next" type="button" onClick={next} aria-label="Sonraki fotoğraf">›</button>}</div>}</>;
+}
+
 function ProjectDetail() {
   const { projects } = useContent();
   const { slug } = useParams();
   const project = projects.find(item => item.slug === slug && item.published !== false);
   if (!project) return <main className="project-detail"><Link to="/projeler">← Tüm projeler</Link><h1>Proje bulunamadı</h1></main>;
   const video = getYoutubeEmbed(project.youtubeUrl);
-  return <main className="project-detail"><Link to="/projeler">← Tüm projeler</Link><p className="eyebrow">{categoryMeta[project.category]?.label?.toUpperCase()} PROJE</p><h1>{project.title}</h1>{project.startDate && <p className="project-date">Başlangıç tarihi · {project.startDate}</p>}<p>{project.description}</p><img className="project-cover" src={project.cover} alt={project.title}/>{project.gallery?.length > 0 && <><h2>Proje galerisi</h2><div className="detail-gallery">{project.gallery.map((image, index)=><img key={`${image}-${index}`} src={image} alt={`${project.title} proje görseli ${index + 1}`}/>)}</div></>}{video && <><h2>Proje videosu</h2><iframe className="project-video" src={video} title={`${project.title} videosu`} allow="autoplay; encrypted-media; picture-in-picture" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></>}</main>;
+  return <main className="project-detail"><Link to="/projeler">← Tüm projeler</Link><p className="eyebrow">{categoryMeta[project.category]?.label?.toUpperCase()} PROJE</p><h1>{project.title}</h1>{project.startDate && <p className="project-date">Başlangıç tarihi · {project.startDate}</p>}<p>{project.description}</p><img className="project-cover" src={project.cover} alt={project.title}/>{project.gallery?.length > 0 && <><h2>Proje galerisi</h2><PhotoGallery className="detail-gallery" images={project.gallery} title={project.title}/></>}{video && <><h2>Proje videosu</h2><iframe className="project-video" src={video} title={`${project.title} videosu`} allow="autoplay; encrypted-media; picture-in-picture" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></>}</main>;
 }
 
 function getYoutubeEmbed(url = "") {
@@ -180,7 +205,7 @@ function getYoutubeEmbed(url = "") {
 function Gallery({ mode = "photos" }) {
   const images = useContent().projects.filter(project => project.published !== false).flatMap(project => [project.cover, ...(project.gallery || [])]).filter(Boolean);
   const videos = useContent().projects.filter(project => project.published !== false && project.youtubeUrl);
-  return <main className="page-main"><PageHero eyebrow="GALERİ" title={mode === "videos" ? <>Proje <em>videoları.</em></> : <>Yapım sürecinden <em>detaylar.</em></>}>Projelerimizden seçilmiş fotoğraf ve videolar.</PageHero>{mode === "videos" ? <section className="video-gallery">{videos.map(project => <article key={project.slug}><iframe src={getYoutubeEmbed(project.youtubeUrl)} title={`${project.title} videosu`} allow="autoplay; encrypted-media; picture-in-picture" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/><h2>{project.title}</h2></article>)}</section> : <section className="gallery-grid">{[...new Set(images)].map((image, index) => <img key={image} src={image} alt={`Kuzeykale proje galerisi ${index + 1}`}/>)}</section>}</main>;
+  return <main className="page-main"><PageHero eyebrow="GALERİ" title={mode === "videos" ? <>Proje <em>videoları.</em></> : <>Yapım sürecinden <em>detaylar.</em></>}>Projelerimizden seçilmiş fotoğraf ve videolar.</PageHero>{mode === "videos" ? <section className="video-gallery">{videos.map(project => <article key={project.slug}><iframe src={getYoutubeEmbed(project.youtubeUrl)} title={`${project.title} videosu`} allow="autoplay; encrypted-media; picture-in-picture" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/><h2>{project.title}</h2></article>)}</section> : <PhotoGallery images={images} title="Kuzeykale proje galerisi"/>}</main>;
 }
 
 function News() { const { news = [] } = useContent(); return <main className="page-main"><PageHero eyebrow="HABERLER" title={<>Kuzeykale'den <em>gelişmeler.</em></>}/><section className="news-grid full-news">{news.filter(item => item.published !== false).map((item, index) => <article key={item.id}>{item.image ? <img className="news-cover" src={item.image} alt={item.title}/> : <div className="news-placeholder" aria-hidden="true"><span>KUZEYKALE</span></div>}<div className="news-card-content"><span>{index < 3 ? "GÜNCEL" : "KURUMSAL"}</span><h3>{item.title}</h3><p>{item.excerpt}</p></div></article>)}</section></main>; }

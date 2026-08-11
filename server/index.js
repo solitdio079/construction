@@ -63,6 +63,55 @@ async function migrateLegacyUploadedImages() {
   }
 }
 migrateLegacyUploadedImages().catch(error => console.error("Legacy WebP migration failed", error.message));
+async function migrateContentSchema() {
+  const partnerLogos = {
+    winsa: "/imported/partners/winsa.webp",
+    "kutahya-seramik": "/imported/partners/kutahya-seramik.webp",
+    kronospan: "/imported/partners/kronospan.webp",
+    "kokler-petrol": "/imported/partners/kokler-petrol.webp",
+    "kastamonu-entegre": "/imported/partners/kastamonu-entegre.webp",
+    eca: "/imported/partners/eca.webp",
+    "canakkale-seramik": "/imported/partners/canakkale-seramik.webp",
+  };
+  const newsImages = {
+    "olukbasi-sozlesme": "/imported/news/olukbasi-sozlesme.webp",
+    "hamza-eren-goksu": "/imported/news/hamza-eren-goksu.webp",
+    "yeni-proje-imzalar": "/imported/news/yeni-proje-imzalar.webp",
+    "hisarciklioglu-mesaj": "/imported/news/hisarciklioglu-mesaj.webp",
+    "vali-cakir-ziyaret": "/imported/news/vali-cakir-ziyaret.webp",
+    "katso-secimleri": "/imported/news/katso-secimleri.webp",
+    "tobb-genc-girisimciler": "/imported/news/tobb-genc-girisimciler.webp",
+    "genc-fikirler": "/imported/news/genc-fikirler.webp",
+  };
+  const missingOriginalNews = [
+    { id: "tobb-genc-girisimciler", title: "Kastamonu TOBB İl Genç Girişimciler İcra Kurulu başkanını seçti", excerpt: "05 Mart 2019 Salı günü Odamız toplantı salonunda yapılan seçim neticesinde Ahmet Cevdet UYANIK, TOBB İl Genç Girişimciler İcra Kurulu Başkanı seçildi.", image: newsImages["tobb-genc-girisimciler"], published: true },
+    { id: "genc-fikirler", title: "Genç Fikirler Yarışıyor etkinliğinde öğrenciler uzman mentörlerle buluştu", excerpt: "Vocathlon Mesleki Girişim Maratonu kapsamında öğrencilerin girişimcilik kapasitelerini artırmaları, fikirlerini geliştirmeleri ve takım çalışmasını deneyimlemeleri amaçlandı.", image: newsImages["genc-fikirler"], published: true },
+  ];
+  for (const file of [contentFile, draftFile]) {
+    const content = await readJson(file, null);
+    if (!content) continue;
+    let changed = false;
+    const isKuzeykale = String(content.company?.name || "").toLocaleLowerCase("tr-TR").includes("kuzeykale");
+    content.partners = (content.partners || []).map(partner => {
+      if (!isKuzeykale || typeof partner !== "object" || partner.logo || !partnerLogos[partner.id]) return partner;
+      changed = true;
+      return { ...partner, logo: partnerLogos[partner.id] };
+    });
+    content.news = (content.news || []).map(item => {
+      if (item.image) return item;
+      if (isKuzeykale && newsImages[item.id]) { changed = true; return { ...item, image: newsImages[item.id] }; }
+      if (!Object.hasOwn(item, "image")) { changed = true; return { ...item, image: "" }; }
+      return item;
+    });
+    for (const article of isKuzeykale ? missingOriginalNews : []) {
+      if (content.news.some(item => item.id === article.id)) continue;
+      content.news.push(article);
+      changed = true;
+    }
+    if (changed) await writeJson(file, content);
+  }
+}
+await migrateContentSchema();
 function parseCookies(req) { return Object.fromEntries((req.headers.cookie || "").split(";").filter(Boolean).map(part => { const [key, ...value] = part.trim().split("="); return [key, decodeURIComponent(value.join("="))]; })); }
 function sessionId(req) { const token = parseCookies(req).kk_session; return token ? crypto.createHash("sha256").update(token).digest("hex") : ""; }
 function requireAdmin(req, res, next) { const session = sessions.get(sessionId(req)); if (!session || session.expiresAt < Date.now()) return res.status(401).json({ message: "Oturumunuz sona erdi. Lütfen tekrar giriş yapın." }); session.expiresAt = Date.now() + sessionHours * 3600000; next(); }
@@ -132,14 +181,14 @@ app.get("/api/admin/draft", requireAdmin, async (_req, res) => res.json(await re
 app.put("/api/admin/draft", requireAdmin, async (req, res) => { await writeJson(draftFile, req.body); res.json({ message: "Taslak kaydedildi." }); });
 app.post("/api/admin/publish", requireAdmin, async (req, res) => { const draft = await readJson(draftFile, null); if (!draft) return res.status(400).json({ message: "Yayınlanacak taslak bulunamadı." }); await backupContent("before-publish"); await writeJson(contentFile, draft); res.json({ message: "Değişiklikler yayınlandı." }); });
 app.get("/api/admin/backups", requireAdmin, async (_req, res) => { const files = (await fs.readdir(backupsDir)).filter(name => name.endsWith(".json")).sort().reverse(); res.json(files); });
-app.post("/api/admin/backups/:name/restore", requireAdmin, async (req, res) => { const filename = path.basename(req.params.name); const source = path.join(backupsDir, filename); const restored = await readJson(source, null); if (!restored) return res.status(404).json({ message: "Yedek bulunamadı." }); await backupContent("before-restore"); await writeJson(contentFile, restored); await writeJson(draftFile, restored); res.json({ message: "Yedek geri yüklendi." }); });
+app.post("/api/admin/backups/:name/restore", requireAdmin, async (req, res) => { const filename = path.basename(req.params.name); const source = path.join(backupsDir, filename); const restored = await readJson(source, null); if (!restored) return res.status(404).json({ message: "Yedek bulunamadı." }); await backupContent("before-restore"); await writeJson(contentFile, restored); await writeJson(draftFile, restored); await migrateContentSchema(); res.json({ message: "Yedek geri yüklendi." }); });
 app.get("/api/admin/status", requireAdmin, (_req, res) => res.json({ emailNotifications: Boolean(process.env.SMTP_HOST && process.env.LEAD_NOTIFICATION_EMAIL), persistentDataPath: dataDir }));
 
 app.get("/api/leads", requireAdmin, async (_req, res) => res.json(await readJson(leadsFile, [])));
 app.patch("/api/leads/:id", requireAdmin, async (req, res) => { const leads = await readJson(leadsFile, []); const allowed = ["status", "notes", "assignedTo", "callbackAt"]; const updates = Object.fromEntries(Object.entries(req.body || {}).filter(([key]) => allowed.includes(key))); const next = leads.map(lead => lead.id === req.params.id ? { ...lead, ...updates, updatedAt: new Date().toISOString() } : lead); await writeJson(leadsFile, next); res.json({ message: "Talep güncellendi." }); });
 app.delete("/api/leads/:id", requireAdmin, async (req, res) => { const leads = await readJson(leadsFile, []); await writeJson(leadsFile, leads.filter(lead => lead.id !== req.params.id)); res.json({ message: "Talep silindi." }); });
 app.get("/api/leads-export.csv", requireAdmin, async (_req, res) => { const leads = await readJson(leadsFile, []); const quote = value => `"${String(value ?? "").replaceAll('"', '""')}"`; const rows = [["Ad", "Telefon", "Proje türü", "Durum", "Sorumlu", "Geri arama", "Notlar", "Tarih"], ...leads.map(lead => [lead.name, lead.phone, lead.projectType, lead.status, lead.assignedTo, lead.callbackAt, lead.notes, lead.createdAt])]; res.type("text/csv").attachment("kuzeykale-teklif-talepleri.csv").send(`\uFEFF${rows.map(row => row.map(quote).join(",")).join("\n")}`); });
-app.post("/api/teklif", formLimiter, async (req, res) => { const { name, phone, projectType, message = "" } = req.body ?? {}; if (!name || !phone || !projectType) return res.status(400).json({ message: "Lütfen zorunlu alanları doldurun." }); const lead = { id: crypto.randomUUID(), name: String(name).slice(0, 120), phone: String(phone).slice(0, 40), projectType: String(projectType).slice(0, 120), message: String(message).slice(0, 2000), status: "new", assignedTo: "", notes: "", callbackAt: "", createdAt: new Date().toISOString() }; const leads = await readJson(leadsFile, []); leads.unshift(lead); await writeJson(leadsFile, leads); notifyNewLead(lead).catch(error => console.error("Lead notification failed", error.message)); res.status(201).json({ message: "Talebiniz alındı. Ekibimiz en kısa sürede size ulaşacak." }); });
+app.post("/api/teklif", formLimiter, async (req, res) => { const { name, phone, projectType, message = "" } = req.body ?? {}; if (!name || !phone || !projectType) return res.status(400).json({ message: "Lütfen zorunlu alanları doldurun." }); const lead = { id: crypto.randomUUID(), name: String(name).slice(0, 120), phone: String(phone).slice(0, 40), projectType: String(projectType).slice(0, 120), message: String(message).slice(0, 2000), status: "new", assignedTo: "", notes: "", callbackAt: "", createdAt: new Date().toISOString() }; const leads = await readJson(leadsFile, []); leads.unshift(lead); await writeJson(leadsFile, leads); res.status(201).json({ message: "Talebiniz yönetim paneline kaydedildi. Ekibimiz en kısa sürede size ulaşacak.", destination: "admin-crm" }); setImmediate(() => notifyNewLead(lead).catch(error => console.error("Lead notification failed", error.message))); });
 
 app.post("/api/uploads", requireAdmin, upload.array("images", 12), async (req, res) => { const urls = []; for (const file of req.files || []) { const id = `${Date.now()}-${crypto.randomUUID()}`; if (file.mimetype === "application/pdf") { await fs.writeFile(path.join(originalsDir, `${id}.pdf`), file.buffer); urls.push(`/uploads/originals/${id}.pdf`); } else { await sharp(file.buffer).rotate().resize({ width: 1600, height: 1600, fit: "inside", withoutEnlargement: true }).webp({ quality: 82 }).toFile(path.join(optimizedDir, `${id}.webp`)); urls.push(`/uploads/optimized/${id}.webp`); } } res.status(201).json({ urls }); });
 
