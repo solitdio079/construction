@@ -81,6 +81,8 @@
 .brand-upload-row article { display: grid; gap: 12px; align-content: start; padding: 18px; background: #f5f4ef; }
 .brand-upload-row span { font-size: 13px; font-weight: 800; }
 .brand-upload-row img { width: 100%; height: 150px; padding: 12px; object-fit: contain; background: #fff; }
+.news-media-editor { display: flex; gap: 12px; align-items: center; margin-top: 14px; }
+.news-media-editor img { width: 180px; aspect-ratio: 16 / 10; object-fit: cover; }
 
 @media (max-width: 700px) {
   .admin-login, .admin-workspace { width: min(100% - 24px, 1100px); }
@@ -102,4 +104,6 @@
   .preview-overlay { padding: 8px; }
   .preview-hero, .preview-panel > section { padding: 45px 20px; }
   .preview-stats, .preview-projects { grid-template-columns: 1fr; }
+  .news-media-editor { align-items: stretch; flex-direction: column; }
+  .news-media-editor img { width: 100%; }
 }

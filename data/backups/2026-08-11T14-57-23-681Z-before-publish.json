@@ -12,7 +12,7 @@
     "facebook": "",
     "seoTitle": "Kuzeykale İnşaat | Kastamonu İnşaat ve Yapı Denetim",
     "seoDescription": "Kastamonu'da taahhüt, mimarlık, mühendislik ve yapı denetim hizmetleri. Tamamlanan ve devam eden Kuzeykale projelerini inceleyin.",
-    "socialImage": "/assets/hero.jpg",
+    "socialImage": "/assets/hero.webp",
     "aboutShort": "2010 yılından beri taahhüt, mimarlık, mühendislik ve yapı denetim alanlarında güvenilir projeler üretiyoruz.",
     "about": "Kuzey Kale İnşaat Taahhüt Mimarlık Mühendislik San. Tic. Ltd. Şti. ve Kastamonu Kale Yapı Denetim; İnşaat Mühendisi Ahmet Cevdet UYANIK ve Makina Mühendisi Mehmet Cevad UYANIK tarafından kurulmuş, 2010 yılından itibaren birçok projeye imza atmıştır. Kastamonu Kale Yapı Denetim, bünyesinde toplam 21 teknik personel istihdam ederek Türkiye'de yaklaşık 5.500.000 m² inşaat alanı denetlemiş deneyimli bir kuruluştur."
   },
@@ -65,55 +65,55 @@
       "id": "mehmet-cevad-uyanik",
       "name": "Mehmet Cevad UYANIK",
       "role": "Kurucu · Makina Mühendisi",
-      "image": "/imported/team-2-mehmet-cevad-uyanik.jpg"
+      "image": "/imported/team-2-mehmet-cevad-uyanik.webp"
     },
     {
       "id": "hakki-yildirim",
       "name": "Hakkı YILDIRIM",
       "role": "Proje Müdürü",
-      "image": "/imported/team-3-hakki-yildirim.jpg"
+      "image": "/imported/team-3-hakki-yildirim.webp"
     },
     {
       "id": "sema-unal",
       "name": "Sema ÜNAL",
       "role": "Satış Sorumlusu",
-      "image": "/imported/team-4-sema-unal.jpg"
+      "image": "/imported/team-4-sema-unal.webp"
     },
     {
       "id": "yigit-ciftci",
       "name": "Yiğit Çiftçi",
       "role": "İnşaat Mühendisi",
-      "image": "/imported/team-5-yigit-ciftci.jpg"
+      "image": "/imported/team-5-yigit-ciftci.webp"
     },
     {
       "id": "tuncay-mintac",
       "name": "Tuncay MINTAÇ",
       "role": "Şantiye Şefi",
-      "image": "/imported/team-6-tuncay-mintac.jpeg"
+      "image": "/imported/team-6-tuncay-mintac.webp"
     },
     {
       "id": "zeynep-nese-daglioglu",
       "name": "Zeynep Neşe DAĞLIOĞLU",
       "role": "İnşaat Mühendisi",
-      "image": "/imported/team-7-zeynep-nese-daglioglu.jpeg"
+      "image": "/imported/team-7-zeynep-nese-daglioglu.webp"
     },
     {
       "id": "volkan-turan",
       "name": "Volkan TURAN",
       "role": "İnşaat Mühendisi",
-      "image": "/imported/team-8-volkan-turan.jpg"
+      "image": "/imported/team-8-volkan-turan.webp"
     },
     {
       "id": "yuksel-ozbozkurt",
       "name": "Yüksel ÖZBOZKURT",
       "role": "İnşaat Teknikeri",
-      "image": "/imported/team-9-yuksel-ozbozkurt.jpg"
+      "image": "/imported/team-9-yuksel-ozbozkurt.webp"
     },
     {
       "id": "yasemin-kebelioglu",
       "name": "Yasemin KEBELİOĞLU",
       "role": "Muhasebe Sorumlusu",
-      "image": "/imported/team-10-yasemin-kebelioglu.jpeg"
+      "image": "/imported/team-10-yasemin-kebelioglu.webp"
     },
     {
       "id": "duygu-kadiroglu",
@@ -125,7 +125,7 @@
       "id": "ayse-karadag",
       "name": "Ayşe KARADAĞ",
       "role": "Ofis Personeli",
-      "image": "/imported/team-12-ayse-karadag.jpeg"
+      "image": "/imported/team-12-ayse-karadag.webp"
     }
   ],
   "projects": [
@@ -135,13 +135,13 @@
       "category": "ongoing",
       "title": "Önder İş Merkezi",
       "startDate": "02 Ekim 2025",
-      "cover": "/imported/project-onder-is-merkezi-cover.jpg",
+      "cover": "/imported/project-onder-is-merkezi-cover.webp",
       "description": "Önder İş Merkezi",
       "gallery": [
-        "/imported/project-onder-is-merkezi-1.jpg",
-        "/imported/project-onder-is-merkezi-2.jpg",
-        "/imported/project-onder-is-merkezi-3.jpg",
-        "/imported/project-onder-is-merkezi-4.jpg"
+        "/imported/project-onder-is-merkezi-1.webp",
+        "/imported/project-onder-is-merkezi-2.webp",
+        "/imported/project-onder-is-merkezi-3.webp",
+        "/imported/project-onder-is-merkezi-4.webp"
       ],
       "youtubeUrl": ""
     },
@@ -151,13 +151,13 @@
       "category": "ongoing",
       "title": "Olukbaşı Royal Suite Life",
       "startDate": "02 Ekim 2025",
-      "cover": "/imported/project-olukbasi-royal-suite-life-cover.jpeg",
+      "cover": "/imported/project-olukbasi-royal-suite-life-cover.webp",
       "description": "Olukbaşı Royal Suite Life",
       "gallery": [
-        "/imported/project-olukbasi-royal-suite-life-1.jpeg",
-        "/imported/project-olukbasi-royal-suite-life-2.jpeg",
-        "/imported/project-olukbasi-royal-suite-life-3.jpeg",
-        "/imported/project-olukbasi-royal-suite-life-4.jpeg"
+        "/imported/project-olukbasi-royal-suite-life-1.webp",
+        "/imported/project-olukbasi-royal-suite-life-2.webp",
+        "/imported/project-olukbasi-royal-suite-life-3.webp",
+        "/imported/project-olukbasi-royal-suite-life-4.webp"
       ],
       "youtubeUrl": "https://www.youtube.com/embed/CaLsuHjGvFo?rel=0&showinfo=0"
     },
@@ -167,13 +167,13 @@
       "category": "ongoing",
       "title": "Bostancı Projesi",
       "startDate": "06 Ocak 2026",
-      "cover": "/imported/project-bostanci-projesi-cover.jpeg",
+      "cover": "/imported/project-bostanci-projesi-cover.webp",
       "description": "Bostancı Projesi",
       "gallery": [
-        "/imported/project-bostanci-projesi-1.jpg",
-        "/imported/project-bostanci-projesi-2.jpg",
-        "/imported/project-bostanci-projesi-3.jpeg",
-        "/imported/project-bostanci-projesi-4.jpeg"
+        "/imported/project-bostanci-projesi-1.webp",
+        "/imported/project-bostanci-projesi-2.webp",
+        "/imported/project-bostanci-projesi-3.webp",
+        "/imported/project-bostanci-projesi-4.webp"
       ],
       "youtubeUrl": "https://www.youtube.com/embed/oB2wMlE6GAY?rel=0&showinfo=0"
     },
@@ -183,12 +183,12 @@
       "category": "planned",
       "title": "Erenköy Projesi",
       "startDate": "03 Ekim 2025",
-      "cover": "/imported/project-erenkoy-projesi-cover.jpg",
+      "cover": "/imported/project-erenkoy-projesi-cover.webp",
       "description": "Erenköy Projesi",
       "gallery": [
-        "/imported/project-erenkoy-projesi-1.jpg",
-        "/imported/project-erenkoy-projesi-2.jpeg",
-        "/imported/project-erenkoy-projesi-3.jpeg"
+        "/imported/project-erenkoy-projesi-1.webp",
+        "/imported/project-erenkoy-projesi-2.webp",
+        "/imported/project-erenkoy-projesi-3.webp"
       ],
       "youtubeUrl": "https://www.youtube.com/embed/tJiTCfOH-kU?rel=0&showinfo=0"
     },
@@ -198,11 +198,11 @@
       "category": "completed",
       "title": "Sembol Rezidans",
       "startDate": "23 Kasım 2022",
-      "cover": "/imported/project-sembol-rezidans-cover.jpg",
+      "cover": "/imported/project-sembol-rezidans-cover.webp",
       "description": "Sembol Rezidans",
       "gallery": [
-        "/imported/project-sembol-rezidans-1.jpg",
-        "/imported/project-sembol-rezidans-2.jpg"
+        "/imported/project-sembol-rezidans-1.webp",
+        "/imported/project-sembol-rezidans-2.webp"
       ],
       "youtubeUrl": ""
     },
@@ -212,12 +212,12 @@
       "category": "completed",
       "title": "Alfa Nova",
       "startDate": "06 Şubat 2024",
-      "cover": "/imported/project-alfa-nova-cover.jpg",
+      "cover": "/imported/project-alfa-nova-cover.webp",
       "description": "Alfa Nova",
       "gallery": [
-        "/imported/project-alfa-nova-1.jpg",
-        "/imported/project-alfa-nova-2.jpg",
-        "/imported/project-alfa-nova-3.jpg"
+        "/imported/project-alfa-nova-1.webp",
+        "/imported/project-alfa-nova-2.webp",
+        "/imported/project-alfa-nova-3.webp"
       ],
       "youtubeUrl": ""
     },
@@ -227,11 +227,11 @@
       "category": "completed",
       "title": "İlbey Apartmanı",
       "startDate": "02 Ekim 2025",
-      "cover": "/imported/project-ilbey-apartmani-cover.jpg",
+      "cover": "/imported/project-ilbey-apartmani-cover.webp",
       "description": "İlbey Apartmanı",
       "gallery": [
-        "/imported/project-ilbey-apartmani-1.jpg",
-        "/imported/project-ilbey-apartmani-2.jpg"
+        "/imported/project-ilbey-apartmani-1.webp",
+        "/imported/project-ilbey-apartmani-2.webp"
       ],
       "youtubeUrl": ""
     },
@@ -241,13 +241,13 @@
       "category": "completed",
       "title": "Olukbaşı Royal Suite",
       "startDate": "30 Kasım 2023",
-      "cover": "/imported/project-olukbasi-royal-suite-cover.jpg",
+      "cover": "/imported/project-olukbasi-royal-suite-cover.webp",
       "description": "Olukbaşı Royal Suite",
       "gallery": [
-        "/imported/project-olukbasi-royal-suite-1.jpg",
-        "/imported/project-olukbasi-royal-suite-2.jpg",
-        "/imported/project-olukbasi-royal-suite-3.jpg",
-        "/imported/project-olukbasi-royal-suite-4.jpg"
+        "/imported/project-olukbasi-royal-suite-1.webp",
+        "/imported/project-olukbasi-royal-suite-2.webp",
+        "/imported/project-olukbasi-royal-suite-3.webp",
+        "/imported/project-olukbasi-royal-suite-4.webp"
       ],
       "youtubeUrl": ""
     },
@@ -257,11 +257,11 @@
       "category": "completed",
       "title": "Cevizli Park İş Merkezi",
       "startDate": "23 Kasım 2022",
-      "cover": "/imported/project-cevizli-park-is-merkezi-cover.png",
+      "cover": "/imported/project-cevizli-park-is-merkezi-cover.webp",
       "description": "Cevizli Park İş Merkezi",
       "gallery": [
-        "/imported/project-cevizli-park-is-merkezi-1.jpg",
-        "/imported/project-cevizli-park-is-merkezi-2.png"
+        "/imported/project-cevizli-park-is-merkezi-1.webp",
+        "/imported/project-cevizli-park-is-merkezi-2.webp"
       ],
       "youtubeUrl": ""
     },
@@ -271,11 +271,11 @@
       "category": "completed",
       "title": "Gölpark Evleri",
       "startDate": "23 Kasım 2022",
-      "cover": "/imported/project-golpark-evleri-cover.png",
+      "cover": "/imported/project-golpark-evleri-cover.webp",
       "description": "Gölpark Evleri",
       "gallery": [
-        "/imported/project-golpark-evleri-1.jpg",
-        "/imported/project-golpark-evleri-3.png"
+        "/imported/project-golpark-evleri-1.webp",
+        "/imported/project-golpark-evleri-3.webp"
       ],
       "youtubeUrl": ""
     },
@@ -285,12 +285,12 @@
       "category": "completed",
       "title": "Gölpark Panaroma",
       "startDate": "23 Kasım 2022",
-      "cover": "/imported/project-golpark-panaroma-cover.png",
+      "cover": "/imported/project-golpark-panaroma-cover.webp",
       "description": "Gölpark Panaroma",
       "gallery": [
-        "/imported/project-golpark-panaroma-1.jpg",
-        "/imported/project-golpark-panaroma-2.png",
-        "/imported/project-golpark-panaroma-3.png"
+        "/imported/project-golpark-panaroma-1.webp",
+        "/imported/project-golpark-panaroma-2.webp",
+        "/imported/project-golpark-panaroma-3.webp"
       ],
       "youtubeUrl": ""
     },
@@ -300,11 +300,11 @@
       "category": "completed",
       "title": "Ilgaz Ali Apartmanı",
       "startDate": "23 Kasım 2022",
-      "cover": "/imported/project-ilgaz-ali-apartmani-cover.png",
+      "cover": "/imported/project-ilgaz-ali-apartmani-cover.webp",
       "description": "Ilgaz Ali Apartmanı",
       "gallery": [
-        "/imported/project-ilgaz-ali-apartmani-1.png",
-        "/imported/project-ilgaz-ali-apartmani-3.png"
+        "/imported/project-ilgaz-ali-apartmani-1.webp",
+        "/imported/project-ilgaz-ali-apartmani-3.webp"
       ],
       "youtubeUrl": ""
     },
@@ -314,11 +314,11 @@
       "category": "completed",
       "title": "Simetri Konutları",
       "startDate": "23 Kasım 2022",
-      "cover": "/imported/project-simetri-konutlari-cover.png",
+      "cover": "/imported/project-simetri-konutlari-cover.webp",
       "description": "Simetri Konutları",
       "gallery": [
-        "/imported/project-simetri-konutlari-1.jpg",
-        "/imported/project-simetri-konutlari-3.png"
+        "/imported/project-simetri-konutlari-1.webp",
+        "/imported/project-simetri-konutlari-3.webp"
       ],
       "youtubeUrl": ""
     }

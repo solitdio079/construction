@@ -6,7 +6,8 @@
     "dev": "concurrently \"vite\" \"node --watch server/index.js\"",
     "build": "vite build",
     "start": "node server/index.js",
-    "hash-password": "node scripts/hash-admin-password.mjs"
+    "hash-password": "node scripts/hash-admin-password.mjs",
+    "convert-images": "node scripts/convert-existing-images.mjs"
   },
   "engines": {
     "node": ">=22.22.0"

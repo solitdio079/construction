@@ -9,7 +9,7 @@ A production-oriented React Router 8 and Express website for Kuzeykale İnşaat.
 - Draft, preview and publish workflow
 - Automatic content backups and restore controls
 - Secure cookie sessions, hashed admin password support, rate limiting and security headers
-- Optimized WebP generation for uploaded images; originals are retained
+- Automatic WebP conversion and optimization for every uploaded photograph; only uploaded PDF documents retain their original format
 - Lightweight CRM with stages, notes, assigned staff, callback reminders, phone/WhatsApp actions and CSV export
 - Optional SMTP notification for new leads
 - Route-aware metadata, Open Graph tags, structured data, dynamic sitemap and robots file
@@ -40,11 +40,13 @@ Copy the output into `ADMIN_PASSWORD_HASH`. The plain `ADMIN_PASSWORD` environme
 1. Create an application from the repository and select the Dockerfile build pack.
 2. Expose container port `3001`.
 3. Add all required values from `.env.example`.
-4. Mount persistent storage at `/app/data`. This contains published content, drafts, leads, backups, originals and optimized uploads.
+4. Mount persistent storage at `/app/data`. This contains published content, drafts, leads, backups, uploaded PDF documents and optimized WebP images.
 5. Set `PUBLIC_URL` to the final HTTPS domain and keep `COOKIE_SECURE=true`.
 6. Connect the domain and allow Coolify to provision HTTPS.
 
 The CMS is available at `/admin`. The sitemap is `/sitemap.xml`, robots directives are at `/robots.txt`, and the health endpoint is `/api/health`.
+
+News articles can have cover photographs managed from the CMS. New project, team, partner, branding and news photographs are converted to WebP during upload. For a future one-time migration of newly added static photographs, run `npm run convert-images -- --apply`; the transparent company logo is intentionally preserved as PNG.
 
 ## Email notifications
 
