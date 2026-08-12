@@ -242,10 +242,16 @@
       "image": "/imported/team-11-duygu-kadiroglu.webp"
     },
     {
-      "id": "ayse-karadag",
-      "name": "Ayşe KARADAĞ",
+      "id": "serdar-yildiz",
+      "name": "Serdar Yıldız",
+      "role": "Mimar",
+      "image": "/imported/team-serdar-yildiz.webp"
+    },
+    {
+      "id": "havva-ay",
+      "name": "Havva AY",
       "role": "Ofis Personeli",
-      "image": "/imported/team-12-ayse-karadag.webp"
+      "image": ""
     }
   ],
   "projects": [

@@ -117,6 +117,20 @@ async function migrateContentSchema() {
     let changed = legacyImageMigration.changed;
     const isKuzeykale = String(content.company?.name || "").toLocaleLowerCase("tr-TR").includes("kuzeykale");
     if (isKuzeykale) {
+      content.team = (content.team || []).map(person => person?.id === "ayse-karadag" ? { ...person, id: "havva-ay", name: "Havva AY", image: "" } : person);
+      if (storedContent.team?.some(person => person?.id === "ayse-karadag")) changed = true;
+      if (!content.team.some(person => person?.id === "serdar-yildiz")) {
+        const serdarYildiz = {
+          id: "serdar-yildiz",
+          name: "Serdar Yıldız",
+          role: "Mimar",
+          image: "/imported/team-serdar-yildiz.webp",
+        };
+        const havvaIndex = content.team.findIndex(person => person?.id === "havva-ay");
+        if (havvaIndex === -1) content.team.push(serdarYildiz);
+        else content.team.splice(havvaIndex, 0, serdarYildiz);
+        changed = true;
+      }
       content.partners = (content.partners || [])
         .filter(partner => !["kokler-petrol", "kokleri", "kokler"].includes(partner?.id))
         .map(partner => partner?.id === "winsa" ? { ...partner, id: "deryapen", name: "Deryapen", logo: "" } : partner);

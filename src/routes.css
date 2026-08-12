@@ -12,6 +12,10 @@
 .page-hero { padding: clamp(80px, 10vw, 150px) max(24px, calc((100vw - 1240px) / 2)); background: #f5f4ef; }
 .page-hero h1 { max-width: 900px; margin: 12px 0 20px; font-size: clamp(42px, 7vw, 88px); line-height: .98; }
 .page-hero > p:last-child { max-width: 700px; font-size: 20px; color: #5e6c73; }
+.about-story { display: grid; grid-template-columns: .75fr 1.25fr; gap: clamp(36px, 6vw, 90px); align-items: center; }
+.about-story figure { margin: 0; }
+.about-story img { display: block; width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+.about-story figcaption { margin-top: 12px; color: #63717b; font-size: 13px; }
 .section-link { display: inline-block; margin-top: 30px; }
 .home-cta { padding: clamp(72px, 9vw, 130px) max(24px, calc((100vw - 1240px) / 2)); text-align: center; background: #10273a; color: #fff; }
 .home-cta h2 { font-size: clamp(38px, 6vw, 72px); margin: 10px auto 32px; }
@@ -120,6 +124,7 @@
   .project-list-page .archive-grid, .gallery-grid, .corporate-links, .corporate-menu-grid, .partner-grid, .full-team, .video-gallery { grid-template-columns: 1fr !important; }
   .service-list article { grid-template-columns: 50px 1fr; }
   .page-hero { padding-top: 70px; padding-bottom: 70px; }
+  .about-story { grid-template-columns: 1fr; }
   .floating-contact { left: 12px; right: 12px; }
   .floating-contact a { flex: 1; text-align: center; }
   .lightbox { padding: 70px 12px 82px; }
