@@ -117,6 +117,9 @@ async function migrateContentSchema() {
     let changed = legacyImageMigration.changed;
     const isKuzeykale = String(content.company?.name || "").toLocaleLowerCase("tr-TR").includes("kuzeykale");
     if (isKuzeykale) {
+      const statsBefore = content.stats?.length || 0;
+      content.stats = (content.stats || []).filter(item => String(item?.label || "").toLocaleLowerCase("tr-TR") !== "kuruluş yılı");
+      if (content.stats.length !== statsBefore) changed = true;
       content.team = (content.team || []).map(person => person?.id === "ayse-karadag" ? { ...person, id: "havva-ay", name: "Havva AY", image: "" } : person);
       if (storedContent.team?.some(person => person?.id === "ayse-karadag")) changed = true;
       if (!content.team.some(person => person?.id === "serdar-yildiz")) {
