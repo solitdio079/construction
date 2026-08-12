@@ -89,10 +89,8 @@ async function migrateLegacyUploadedImages() {
 migrateLegacyUploadedImages().catch(error => console.error("Legacy WebP migration failed", error.message));
 async function migrateContentSchema() {
   const partnerLogos = {
-    winsa: "/imported/partners/winsa.webp",
     "kutahya-seramik": "/imported/partners/kutahya-seramik.webp",
     kronospan: "/imported/partners/kronospan.webp",
-    "kokler-petrol": "/imported/partners/kokler-petrol.webp",
     "kastamonu-entegre": "/imported/partners/kastamonu-entegre.webp",
     eca: "/imported/partners/eca.webp",
     "canakkale-seramik": "/imported/partners/canakkale-seramik.webp",
@@ -118,6 +116,22 @@ async function migrateContentSchema() {
     const content = legacyImageMigration.value;
     let changed = legacyImageMigration.changed;
     const isKuzeykale = String(content.company?.name || "").toLocaleLowerCase("tr-TR").includes("kuzeykale");
+    if (isKuzeykale) {
+      content.partners = (content.partners || [])
+        .filter(partner => !["kokler-petrol", "kokleri", "kokler"].includes(partner?.id))
+        .map(partner => partner?.id === "winsa" ? { ...partner, id: "deryapen", name: "Deryapen", logo: "" } : partner);
+      const requestedPartners = [
+        { id: "deryapen", name: "Deryapen", logo: "" },
+        { id: "ozturkler", name: "Öztürkler", logo: "" },
+        { id: "bahrioglu-mermer", name: "Bahrioğlu Mermer", logo: "" },
+      ];
+      for (const partner of requestedPartners) {
+        if (content.partners.some(item => item?.id === partner.id)) continue;
+        content.partners.push(partner);
+        changed = true;
+      }
+      if (storedContent.partners?.some(partner => partner?.id === "winsa" || ["kokler-petrol", "kokleri", "kokler"].includes(partner?.id))) changed = true;
+    }
     content.partners = (content.partners || []).map(partner => {
       if (!isKuzeykale || typeof partner !== "object" || partner.logo || !partnerLogos[partner.id]) return partner;
       changed = true;

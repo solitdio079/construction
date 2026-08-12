@@ -141,7 +141,7 @@ function Home() {
   return <main>
     <section className="hero hero-video">
       <div className="hero-video-media"><iframe src={hero?.videoUrl} title="Kuzeykale tanıtım filmi" allow="autoplay; encrypted-media; picture-in-picture" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></div>
-      <div className="hero-video-shade"/><div className="hero-copy"><p className="eyebrow">{hero?.eyebrow}</p><h1>{hero?.title}</h1><p className="lede">{hero?.description}</p><div className="hero-actions"><Link className="button" to="/iletisim">Projenizi konuşalım <span>→</span></Link><Link className="text-link" to="/projeler">Projelerimizi inceleyin</Link></div></div><div className="hero-badge"><b>2010</b><span>yılından beri</span></div>
+      <div className="hero-video-shade"/><div className="hero-copy"><p className="eyebrow">{hero?.eyebrow}</p><h1>{hero?.title}</h1><p className="lede">{hero?.description}</p><div className="hero-actions"><Link className="text-link" to="/projeler">Projelerimizi inceleyin</Link></div></div>
     </section>
     <section className="trust"><p>GÜVENİLİR YAPI ÇÖZÜMLERİ</p><div><span>Taahhüt</span><span>Kentsel dönüşüm</span><span>Projelendirme</span><span>Uygulama</span></div></section>
     <section className="stats-strip">{stats?.map(item => <article key={item.label}><b>{item.value}</b><span>{item.label}</span></article>)}</section>

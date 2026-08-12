@@ -74,9 +74,9 @@
   ],
   "partners": [
     {
-      "id": "winsa",
-      "name": "Winsa",
-      "logo": "/imported/partners/winsa.webp"
+      "id": "deryapen",
+      "name": "Deryapen",
+      "logo": ""
     },
     {
       "id": "kutahya-seramik",
@@ -87,11 +87,6 @@
       "id": "kronospan",
       "name": "Kronospan",
       "logo": "/imported/partners/kronospan.webp"
-    },
-    {
-      "id": "kokler-petrol",
-      "name": "Kökler Petrol",
-      "logo": "/imported/partners/kokler-petrol.webp"
     },
     {
       "id": "kastamonu-entegre",
@@ -107,6 +102,16 @@
       "id": "canakkale-seramik",
       "name": "Çanakkale Seramik",
       "logo": "/imported/partners/canakkale-seramik.webp"
+    },
+    {
+      "id": "ozturkler",
+      "name": "Öztürkler",
+      "logo": ""
+    },
+    {
+      "id": "bahrioglu-mermer",
+      "name": "Bahrioğlu Mermer",
+      "logo": ""
     }
   ],
   "testimonials": [],
