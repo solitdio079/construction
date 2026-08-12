@@ -41,6 +41,8 @@ Copy the output into `ADMIN_PASSWORD_HASH`. The plain `ADMIN_PASSWORD` environme
 2. Expose container port `3001`.
 3. Add all required values from `.env.example`.
 4. Mount persistent storage at `/app/data`. This contains published content, drafts, leads, backups, uploaded PDF documents and optimized WebP images.
+
+On startup, the server safely migrates legacy `/imported/*.jpg`, `.jpeg` and `.png` references in persistent CMS content to `.webp` only when the matching static WebP asset exists. A copy of each changed JSON file is written to `/app/data/backups/migrations` before it is updated.
 5. Set `PUBLIC_URL` to the final HTTPS domain and keep `COOKIE_SECURE=true`.
 6. Connect the domain and allow Coolify to provision HTTPS.
 

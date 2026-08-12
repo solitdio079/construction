@@ -13,18 +13,19 @@ import nodemailer from "nodemailer";
 const app = express();
 const port = process.env.PORT || 3001;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const dataDir = path.join(root, "data");
+const dataDir = path.resolve(process.env.DATA_DIR || path.join(root, "data"));
 const uploadsDir = path.join(dataDir, "uploads");
 const originalsDir = path.join(uploadsDir, "originals");
 const optimizedDir = path.join(uploadsDir, "optimized");
 const backupsDir = path.join(dataDir, "backups");
+const migrationBackupsDir = path.join(backupsDir, "migrations");
 const contentFile = path.join(dataDir, "content.json");
 const draftFile = path.join(dataDir, "draft.json");
 const leadsFile = path.join(dataDir, "leads.json");
 const sessions = new Map();
 const sessionHours = Number(process.env.SESSION_HOURS || 8);
 
-for (const directory of [dataDir, originalsDir, optimizedDir, backupsDir]) fsSync.mkdirSync(directory, { recursive: true });
+for (const directory of [dataDir, originalsDir, optimizedDir, backupsDir, migrationBackupsDir]) fsSync.mkdirSync(directory, { recursive: true });
 app.set("trust proxy", 1);
 app.use(helmet({
   contentSecurityPolicy: {
@@ -50,6 +51,29 @@ const upload = multer({ memoryStorage: multer.memoryStorage(), limits: { fileSiz
 
 async function readJson(file, fallback) { try { return JSON.parse(await fs.readFile(file, "utf8")); } catch { return fallback; } }
 async function writeJson(file, value) { await fs.writeFile(file, `${JSON.stringify(value, null, 2)}\n`); }
+function migrateLegacyImportedImageUrls(value) {
+  let changed = false;
+  const visit = current => {
+    if (typeof current === "string") {
+      const match = current.match(/^(\/imported\/.+)\.(jpe?g|png|gif|tiff?|avif)([?#].*)?$/i);
+      if (!match) return current;
+      const nextUrl = `${match[1]}.webp${match[3] || ""}`;
+      const staticPath = match[1].replace(/^\//, "") + ".webp";
+      if (!fsSync.existsSync(path.join(root, "dist", staticPath))) return current;
+      changed = true;
+      return nextUrl;
+    }
+    if (Array.isArray(current)) return current.map(visit);
+    if (current && typeof current === "object") return Object.fromEntries(Object.entries(current).map(([key, entry]) => [key, visit(entry)]));
+    return current;
+  };
+  return { value: visit(value), changed };
+}
+async function backupBeforeMigration(file) {
+  const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const name = path.basename(file, ".json");
+  await fs.copyFile(file, path.join(migrationBackupsDir, `${stamp}-${name}-before-webp-url-migration.json`));
+}
 async function migrateLegacyUploadedImages() {
   const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".gif", ".tif", ".tiff", ".avif"]);
   for (const filename of await fs.readdir(originalsDir)) {
@@ -88,9 +112,11 @@ async function migrateContentSchema() {
     { id: "genc-fikirler", title: "Genç Fikirler Yarışıyor etkinliğinde öğrenciler uzman mentörlerle buluştu", excerpt: "Vocathlon Mesleki Girişim Maratonu kapsamında öğrencilerin girişimcilik kapasitelerini artırmaları, fikirlerini geliştirmeleri ve takım çalışmasını deneyimlemeleri amaçlandı.", image: newsImages["genc-fikirler"], published: true },
   ];
   for (const file of [contentFile, draftFile]) {
-    const content = await readJson(file, null);
-    if (!content) continue;
-    let changed = false;
+    const storedContent = await readJson(file, null);
+    if (!storedContent) continue;
+    const legacyImageMigration = migrateLegacyImportedImageUrls(storedContent);
+    const content = legacyImageMigration.value;
+    let changed = legacyImageMigration.changed;
     const isKuzeykale = String(content.company?.name || "").toLocaleLowerCase("tr-TR").includes("kuzeykale");
     content.partners = (content.partners || []).map(partner => {
       if (!isKuzeykale || typeof partner !== "object" || partner.logo || !partnerLogos[partner.id]) return partner;
@@ -108,7 +134,10 @@ async function migrateContentSchema() {
       content.news.push(article);
       changed = true;
     }
-    if (changed) await writeJson(file, content);
+    if (changed) {
+      if (legacyImageMigration.changed) await backupBeforeMigration(file);
+      await writeJson(file, content);
+    }
   }
 }
 await migrateContentSchema();
